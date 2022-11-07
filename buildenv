@@ -2,6 +2,7 @@ export ZOPEN_GIT_DEPS="curl make"
 export ZOPEN_TARBALL_URL="https://ftp.gnu.org/gnu/grep/grep-3.8.tar.gz"
 export ZOPEN_TARBALL_DEPS="curl make"
 export ZOPEN_TYPE="TARBALL"
+export ZOPEN_CHECK="skip"
 
 zopen_check_results()
 {
