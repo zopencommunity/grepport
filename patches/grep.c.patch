@@ -1,0 +1,33 @@
+diff --git a/src/grep.c b/src/grep.c
+index 9b9407d..99f0076 100644
+--- a/src/grep.c
++++ b/src/grep.c
+@@ -53,6 +53,28 @@
+ #include "xbinary-io.h"
+ #include "xstrtol.h"
+ 
++#ifdef __MVS__
++  /* z/OS incorrectly defined these macros - if they are present,
++   * redefined them
++   */
++  #ifdef S_TYPEISSEM
++     #undef S_TYPEISSEM
++     #define S_TYPEISSEM(x) (0)
++  #endif
++  #ifdef S_TYPEISMQ
++     #undef S_TYPEISMQ
++     #define S_TYPEISMQ(x) (0)
++  #endif
++  #ifdef S_TYPEISSHM
++     #undef S_TYPEISSHM
++     #define S_TYPEISSHM(x) (0)
++  #endif
++  #ifdef S_TYPEISTMO
++     #undef S_TYPEISTMO
++     #define S_TYPEISTMO(x) (0)
++  #endif
++#endif
++
+ enum { SEP_CHAR_SELECTED = ':' };
+ enum { SEP_CHAR_REJECTED = '-' };
+ static char const SEP_STR_GROUP[] = "--";
