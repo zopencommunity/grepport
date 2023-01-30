@@ -1,6 +1,6 @@
 export ZOPEN_GIT_DEPS="curl make"
 export ZOPEN_TARBALL_URL="https://ftp.gnu.org/gnu/grep/grep-3.8.tar.gz"
-export ZOPEN_TARBALL_DEPS="curl make tar diffutils findutils coreutils"
+export ZOPEN_TARBALL_DEPS="curl make tar diffutils findutils coreutils zoslib"
 export ZOPEN_TYPE="TARBALL"
 export ZOPEN_EXTRA_CPPFLAGS='-D_LARGE_TIME_API'
 
