@@ -32,3 +32,8 @@ zopen_append_to_env()
 {
   # echo envars outside of PATH, MANPATH, LIBPATH
 }
+
+zopen_get_version()
+{
+    ./src/grep -V | head -1 | awk '{print $4}'
+}
