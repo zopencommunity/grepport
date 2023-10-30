@@ -1,7 +1,10 @@
-export ZOPEN_GIT_DEPS="curl make"
-export ZOPEN_TARBALL_URL="https://ftp.gnu.org/gnu/grep/grep-3.8.tar.gz"
-export ZOPEN_TARBALL_DEPS="curl make tar diffutils findutils coreutils zoslib"
-export ZOPEN_TYPE="TARBALL"
+# bump: grep-version /GREP_VERSION="(.*)"/ https://ftp.gnu.org/gnu/grep/|re:/href="grep-([\d.]+).tar.gz"/$1/|semver:*
+GREP_VERSION="3.8"
+
+export ZOPEN_BUILD_LINE="STABLE"
+export ZOPEN_DEV_DEPS="curl make"
+export ZOPEN_STABLE_URL="https://ftp.gnu.org/gnu/grep/grep-${GREP_VERSION}.tar.gz"
+export ZOPEN_STABLE_DEPS="curl make tar diffutils findutils coreutils zoslib"
 export ZOPEN_EXTRA_CPPFLAGS='-D_LARGE_TIME_API'
 export ZOPEN_CHECK_TIMEOUT=22000 
 export ZOPEN_COMP=CLANG
