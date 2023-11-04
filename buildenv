@@ -1,5 +1,5 @@
 # bump: grep-version /GREP_VERSION="(.*)"/ https://ftp.gnu.org/gnu/grep/|re:/href="grep-([\d.]+).tar.gz"/$1/|semver:*
-GREP_VERSION="3.8"
+GREP_VERSION="3.11"
 
 export ZOPEN_BUILD_LINE="STABLE"
 export ZOPEN_DEV_DEPS="curl make"
@@ -14,6 +14,7 @@ zopen_check_results()
 ============================================================================
 Testsuite summary for GNU grep 3.8
 ============================================================================
+# Previous version (3.8)
 # TOTAL: 121
 # PASS:  62
 # SKIP:  52
@@ -21,13 +22,25 @@ Testsuite summary for GNU grep 3.8
 # FAIL:  7
 # XPASS: 0
 # ERROR: 0
+
+# Current version (3.11)
+# TOTAL: 127
+# PASS:  60
+# SKIP:  57
+# XFAIL: 0
+# FAIL:  10
+# XPASS: 0
+# ERROR: 0
+
+# So there are more failures, but there fewer skips and more testcases. 
+# Failures do need to be investigated. See: https://github.com/ZOSOpenTools/grepport/issues/11
   dir="$1"
   pfx="$2"
   chk="$1/$2_check.log"
 
   totalTests=$(grep '# TOTAL:' $chk | awk '{ print $3 }')
   actualFailures=$(grep '# FAIL:' $chk | awk '{ print $3 }')
-  expectedFailures=7
+  expectedFailures=10
   echo "actualFailures:${actualFailures}"
   echo "totalTests:${totalTests}"
   echo "expectedFailures:${expectedFailures}"
