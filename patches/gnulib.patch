@@ -1,0 +1,14 @@
+diff --git a/lib/fdopendir.c b/lib/fdopendir.c
+index 0f43d6f..015163d 100644
+--- a/lib/fdopendir.c
++++ b/lib/fdopendir.c
+@@ -174,7 +174,9 @@ fdopendir_with_dup (int fd, int older_dupfd, struct saved_cwd const *cwd)
+         }
+       else
+         {
++#ifndef __MVS__
+           close (fd);
++#endif
+           dir = fd_clone_opendir (dupfd, cwd);
+           saved_errno = errno;
+           if (! dir)
