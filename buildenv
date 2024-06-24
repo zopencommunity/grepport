@@ -46,6 +46,17 @@ Testsuite summary for GNU grep 3.8
   echo "expectedFailures:${expectedFailures}"
 }
 
+zopen_post_install()
+{
+  mv $ZOPEN_INSTALL_DIR/bin/grep $ZOPEN_INSTALL_DIR/bin/ggrep
+  mv $ZOPEN_INSTALL_DIR/bin/fgrep $ZOPEN_INSTALL_DIR/bin/gfgrep
+  mv $ZOPEN_INSTALL_DIR/bin/egrep $ZOPEN_INSTALL_DIR/bin/gegrep
+  mkdir $ZOPEN_INSTALL_DIR/altbin
+  ln -s ../bin/ggrep $ZOPEN_INSTALL_DIR/altbin/grep
+  ln -s ../bin/gfgrep $ZOPEN_INSTALL_DIR/altbin/fgrep
+  ln -s ../bin/gegrep $ZOPEN_INSTALL_DIR/altbin/egrep
+}
+
 zopen_append_to_env()
 {
   # echo envars outside of PATH, MANPATH, LIBPATH
