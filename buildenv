@@ -57,6 +57,16 @@ zopen_post_install()
   ln -s ../bin/gegrep $ZOPEN_INSTALL_DIR/altbin/egrep
 }
 
+zopen_install_caveats()
+{
+cat <<ZZ
+GNU grep has been installed with the prefix "g" under bin/ to avoid collision with z/OS /bin/ grep tools.
+If you prefer to use GNU grep as grep, source zopen-config with the option --override-zos-tools.
+Or add \$ZOPEN_ROOTFS/usr/local/altbin to your \$PATH.
+ZZ
+}
+
+
 zopen_append_to_env()
 {
   # echo envars outside of PATH, MANPATH, LIBPATH
