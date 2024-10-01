@@ -55,14 +55,23 @@ zopen_post_install()
   ln -s ../bin/ggrep $ZOPEN_INSTALL_DIR/altbin/grep
   ln -s ../bin/gfgrep $ZOPEN_INSTALL_DIR/altbin/fgrep
   ln -s ../bin/gegrep $ZOPEN_INSTALL_DIR/altbin/egrep
+
+  mkdir -p $ZOPEN_INSTALL_DIR/share/altman/man1
+  mv $ZOPEN_INSTALL_DIR/share/man/man1/grep.1 $ZOPEN_INSTALL_DIR/share/man/man1/ggrep.1
+  mv $ZOPEN_INSTALL_DIR/share/man/man1/egrep.1 $ZOPEN_INSTALL_DIR/share/man/man1/gegrep.1
+  mv $ZOPEN_INSTALL_DIR/share/man/man1/fgrep.1 $ZOPEN_INSTALL_DIR/share/man/man1/gfgrep.1
+  ln -s ../../man/man1/ggrep.1 $ZOPEN_INSTALL_DIR/share/altman/man1/grep.1
+  ln -s ../../man/man1/gegrep.1 $ZOPEN_INSTALL_DIR/share/altman/man1/egrep.1
+  ln -s ../../man/man1/gfgrep.1 $ZOPEN_INSTALL_DIR/share/altman/man1/fgrep.1
 }
 
 zopen_install_caveats()
 {
 cat <<ZZ
-GNU grep has been installed with the prefix "g" under bin/ to avoid collision with z/OS /bin/ grep tools.
-If you prefer to use GNU grep as grep, source zopen-config with the option --override-zos-tools.
-Or add \$ZOPEN_ROOTFS/usr/local/altbin to your \$PATH.
+GNU grep has been installed as ggrep under the bin/ dir to avoid collision with z/OS /bin/grep.
+The conflicting manpages have been installed under the share/altman dir. You can use zotman to view
+the manpages as such: zotman ggrep
+If you prefer to use the GNU grep as grep, source zopen-config with the option --override-zos-tools.
 ZZ
 }
 
