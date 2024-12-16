@@ -1,12 +1,13 @@
 diff --git a/src/grep.c b/src/grep.c
-index 9b9407d..99f0076 100644
+index 491dd02..352fc63 100644
 --- a/src/grep.c
 +++ b/src/grep.c
-@@ -53,6 +53,28 @@
+@@ -53,6 +53,29 @@
  #include "xbinary-io.h"
  #include "xstrtol.h"
  
 +#ifdef __MVS__
++  #include <signal.h>
 +  /* z/OS incorrectly defined these macros - if they are present,
 +   * redefined them
 +   */
@@ -31,3 +32,53 @@ index 9b9407d..99f0076 100644
  enum { SEP_CHAR_SELECTED = ':' };
  enum { SEP_CHAR_REJECTED = '-' };
  static char const SEP_STR_GROUP[] = "--";
+@@ -2458,6 +2481,37 @@ try_fgrep_pattern (int matcher, char *keys, idx_t *len_p)
+   return result;
+ }
+ 
++#ifdef __MVS__
++
++void handle_sigpipe(int sig)
++{
++  _exit(141);
++}
++
++void install_signal_handler(int signum, void (*handler)(int)) {
++    struct sigaction current_action;
++
++    if (sigaction(signum, NULL, &current_action) == -1) {
++        perror("sigaction");
++        exit(EXIT_FAILURE);
++    }
++
++    if (current_action.sa_handler == SIG_DFL) {
++        struct sigaction new_action = {0};
++        new_action.sa_handler = handler;
++        new_action.sa_flags = 0;
++        sigemptyset(&new_action.sa_mask);
++
++        if (sigaction(signum, &new_action, NULL) == -1) {
++            perror("sigaction");
++            exit(EXIT_FAILURE);
++        }
++
++    }
++}
++
++#endif
++
+ int
+ main (int argc, char **argv)
+ {
+@@ -2470,7 +2524,10 @@ main (int argc, char **argv)
+   FILE *fp;
+   exit_failure = EXIT_TROUBLE;
+   initialize_main (&argc, &argv);
+-
++#ifdef __MVS__
++  //Workaround for signal handling at atexit handler
++  install_signal_handler(SIGPIPE, handle_sigpipe);
++#endif
+   /* Which command-line options have been specified for filename output.
+      -1 for -h, 1 for -H, 0 for neither.  */
+   int filename_option = 0;
