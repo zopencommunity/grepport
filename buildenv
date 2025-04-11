@@ -1,5 +1,5 @@
 # bump: grep-version /GREP_VERSION="(.*)"/ https://ftp.gnu.org/gnu/grep/|re:/href="grep-([\d.]+).tar.gz"/$1/|semver:*
-GREP_VERSION="3.11"
+GREP_VERSION="3.12"
 
 export ZOPEN_BUILD_LINE="STABLE"
 export ZOPEN_CATEGORIES="utilities"
